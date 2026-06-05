@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1q's Macro | Hub</title>
+    <style>
+        :root {
+            --bg-color: #0a0a0c;
+            --accent-color: #5865F2; 
+            --border-color: #1f2026;
+            --text-main: #ffffff;
+            --text-muted: #626575;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 1;
+        }
+
+        .glow {
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(88, 101, 242, 0.05) 0%, transparent 70%);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .card {
+            position: relative;
+            z-index: 3;
+            background: rgba(13, 13, 17, 0.7);
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            padding: 40px 50px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .icon-wrapper {
+            margin-bottom: 24px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .icon-wrapper img {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: #121216;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .btn-discord {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: #ffffff;
+            color: #000000;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.2s ease-in-out;
+            border: 1px solid transparent;
+        }
+
+        .btn-discord:hover {
+            background: transparent;
+            color: var(--text-main);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            margin-top: 32px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="glow"></div>
+
+    <div class="card">
+        <div class="icon-wrapper">
+            <!-- Charge ton fichier icon.png -->
+            <img src="icon.png" alt="1q's Macro Logo">
+        </div>
+        
+        <h1>1q's Macro</h1>
+        <p class="subtitle">Rejoins la communauté sur Discord pour obtenir les dernières mises à jour, signaler des bugs et échanger avec les membres.</p>
+        
+        <!-- RENSEIGNE TON LIEN DISCORD ICI -->
+        <a href="https://discord.gg/grE7wbY3Q8" class="btn-discord">
+            Rejoindre le Discord
+        </a>
+
+        <div class="footer">
+            Automated Hub // Build 0.1.0
+        </div>
+    </div>
+
+</body>
+</html>
