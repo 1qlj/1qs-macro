@@ -4,171 +4,331 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>1q's Macro | Hub</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0c;
-            --discord-color: #5865F2;
-            --border-color: #1f2026;
-            --text-main: #ffffff;
-            --text-muted: #626575;
+            --bg: #07070a;
+            --card-bg: rgba(12, 12, 16, 0.9);
+            --border: rgba(255,255,255,0.08);
+            --border-hover: rgba(255,255,255,0.2);
+            --text: #f0f0f5;
+            --muted: #52535f;
+            --discord: #5865F2;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='4' fill='%23ffffff'/%3E%3Ccircle cx='8' cy='8' r='7' fill='none' stroke='%23ffffff' stroke-width='1' stroke-opacity='0.5'/%3E%3C/svg%3E") 8 8, auto;
+        * { box-sizing: border-box; margin: 0; padding: 0;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='3.5' fill='%23fff'/%3E%3Ccircle cx='8' cy='8' r='7' fill='none' stroke='%23ffffff' stroke-width='1' stroke-opacity='0.4'/%3E%3C/svg%3E") 8 8, auto;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', -apple-system, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             overflow: hidden;
-            position: relative;
         }
 
-        /* Grid background effect */
+        /* Fine grid */
         body::before {
             content: '';
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(to right, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255, 255, 255, 0.01) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 1;
+            position: fixed; inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+            background-size: 48px 48px;
+            mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
         }
 
-        /* Subtle background glow */
-        .glow {
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-            z-index: 2;
+        /* Ambient glow behind card */
+        .ambient {
+            position: fixed;
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 65%);
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
             pointer-events: none;
+            animation: pulse 6s ease-in-out infinite;
         }
 
-        /* Main card - WITH INTENSE WHITE NEON GLOW */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+            50%       { opacity: 0.6; transform: translate(-50%, -50%) scale(1.08); }
+        }
+
+        /* Card */
         .card {
             position: relative;
-            z-index: 3;
-            background: rgba(13, 13, 17, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(12px);
-            padding: 50px 50px;
-            border-radius: 12px;
+            z-index: 10;
+            background: var(--card-bg);
+            border: 1px solid var(--border-hover);
+            backdrop-filter: blur(20px);
+            padding: 44px 44px 40px;
+            border-radius: 18px;
             text-align: center;
-            max-width: 420px;
             width: 100%;
-            box-shadow: 
-                0 20px 40px rgba(0, 0, 0, 0.7),
-                0 0 25px rgba(255, 255, 255, 0.25),
-                0 0 50px rgba(255, 255, 255, 0.15),
-                0 0 80px rgba(255, 255, 255, 0.08);
+            max-width: 400px;
+            box-shadow:
+                0 0 0 1px rgba(255,255,255,0.04) inset,
+                0 30px 60px rgba(0,0,0,0.8),
+                0 0 30px rgba(255,255,255,0.1),
+                0 0 70px rgba(255,255,255,0.05);
+            animation: fadeUp 0.6s cubic-bezier(0.22,1,0.36,1) both;
         }
 
-        /* Logo wrapper */
-        .icon-wrapper {
-            margin-bottom: 24px;
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Logo */
+        .logo-wrap {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 22px;
             position: relative;
-            display: inline-block;
         }
 
-        .icon-wrapper img {
-            width: 80px;
-            height: 80px;
+        .logo-wrap::after {
+            content: '';
+            position: absolute; inset: -8px;
+            border-radius: 24px;
+            background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 70%);
+        }
+
+        .logo-wrap img {
+            width: 72px; height: 72px;
             border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: #121216;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: #111116;
+            position: relative; z-index: 1;
+            box-shadow: 0 0 20px rgba(255,255,255,0.08);
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 99px;
+            padding: 4px 12px;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+
+        .badge-dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 6px #22c55e;
+            animation: blink 2s ease-in-out infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0.4; }
         }
 
         h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
+            font-size: 1.9rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
             margin-bottom: 8px;
+            background: linear-gradient(135deg, #fff 40%, rgba(255,255,255,0.55));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .subtitle {
-            color: var(--text-muted);
-            font-size: 0.95rem;
+            color: var(--muted);
+            font-size: 0.875rem;
+            line-height: 1.6;
             margin-bottom: 32px;
-            line-height: 1.5;
+            padding: 0 4px;
         }
 
-        /* Container for the identical buttons */
-        .btn-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px; /* Space between buttons */
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border-hover), transparent);
+            margin-bottom: 28px;
         }
 
-        /* Base style for both identical buttons */
-        .btn-custom {
+        /* Buttons */
+        .btn-container { display: flex; flex-direction: column; gap: 10px; }
+
+        .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            background: #ffffff;
-            color: #000000;
+            gap: 9px;
             text-decoration: none;
-            padding: 14px 28px;
-            border-radius: 6px;
+            padding: 13px 24px;
+            border-radius: 10px;
             font-weight: 600;
-            font-size: 0.95rem;
-            transition: all 0.3s ease-in-out;
-            border: 1px solid transparent;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.25), 0 0 30px rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5' fill='%23fff'/%3E%3C/svg%3E") 8 8, pointer;
         }
 
-        /* Hover effect for Launcher (White glow intense) */
+        .btn svg { flex-shrink: 0; }
+
+        .btn-launcher {
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 18px rgba(255,255,255,0.2), 0 4px 12px rgba(0,0,0,0.4);
+        }
         .btn-launcher:hover {
-            background: #ffffff;
-            color: #000000;
-            box-shadow: 0 0 25px rgba(255, 255, 255, 0.8), 0 0 50px rgba(255, 255, 255, 0.4);
             transform: translateY(-2px);
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5' fill='%23ffffff'/%3E%3C/svg%3E") 8 8, pointer;
+            box-shadow: 0 0 32px rgba(255,255,255,0.7), 0 0 60px rgba(255,255,255,0.25), 0 6px 20px rgba(0,0,0,0.5);
         }
 
-        /* Hover effect for Discord (Changes to Discord Blue glow) */
+        .btn-discord {
+            background: rgba(88,101,242,0.12);
+            color: #8b97ff;
+            border: 1px solid rgba(88,101,242,0.3);
+            box-shadow: 0 0 14px rgba(88,101,242,0.1);
+        }
         .btn-discord:hover {
-            background: var(--discord-color);
-            color: #ffffff;
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.6), 0 0 40px rgba(88, 101, 242, 0.3);
+            background: var(--discord);
+            color: #fff;
+            border-color: transparent;
             transform: translateY(-2px);
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='5' fill='%23ffffff'/%3E%3C/svg%3E") 8 8, pointer;
+            box-shadow: 0 0 24px rgba(88,101,242,0.6), 0 0 50px rgba(88,101,242,0.2);
+        }
+
+        /* Footer note */
+        .footer-note {
+            margin-top: 22px;
+            font-size: 0.75rem;
+            color: #2e2f38;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.35; }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 28px; left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: rgba(18,18,22,0.95);
+            border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px;
+            padding: 11px 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #fff;
+            display: flex; align-items: center; gap: 9px;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+            transition: transform 0.35s cubic-bezier(0.22,1,0.36,1), opacity 0.35s ease;
+            opacity: 0;
+            z-index: 999;
+            white-space: nowrap;
+        }
+        .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+        .toast-icon { font-size: 1rem; }
+
+        /* Cursor trail dots */
+        .trail-dot {
+            position: fixed;
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #fff;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.4s ease;
         }
     </style>
 </head>
 <body>
 
-    <div class="glow"></div>
+<div class="ambient"></div>
 
-    <div class="card">
-        <div class="icon-wrapper">
-            <img src="icon.png" alt="1q's Macro Logo">
-        </div>
-        
-        <h1>1q's Macro</h1>
-        <p class="subtitle">Join our Discord community to get the latest updates, report bugs, and get your key! (prices avaiable on the discord server)</p>
-        
-        <div class="btn-container">
-            <a href="https://github.com/1qlj/1qs-macro/releases/download/0.1/1Q.S.MACRO.LAUNCHER.exe" class="btn-custom btn-launcher">
-                Download Launcher
-            </a>
-
-            <a href="https://discord.gg/grE7wbY3Q8" class="btn-custom btn-discord">
-                Join Discord
-            </a>
-        </div>
+<div class="card">
+    <div class="logo-wrap">
+        <img src="icon.png" alt="1q's Macro Logo">
     </div>
+
+    <h1>1q's Macro</h1>
+    <p class="subtitle">Join our Discord to get the latest updates, report bugs &amp; grab your key. Pricing available on the server.</p>
+
+    <div class="divider"></div>
+
+    <div class="btn-container">
+        <a href="https://github.com/1qlj/1qs-macro/releases/download/0.1/1Q.S.MACRO.LAUNCHER.exe" class="btn btn-launcher" onclick="showToast('⬇️', 'Download started!')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            Download Launcher
+        </a>
+
+        <a href="https://discord.gg/grE7wbY3Q8" class="btn btn-discord">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/>
+            </svg>
+            Join Discord
+        </a>
+    </div>
+
+    <p class="footer-note">© 2026 1q's Macro — All rights reserved</p>
+</div>
+
+<div class="toast" id="toast">
+    <span class="toast-icon" id="toast-icon"></span>
+    <span id="toast-msg"></span>
+</div>
+
+<script>
+    // --- Cursor trail ---
+    const trail = Array.from({length: 12}, (_, i) => {
+        const d = document.createElement('div');
+        d.className = 'trail-dot';
+        d.style.opacity = (1 - i / 12) * 0.6;
+        d.style.width = d.style.height = (6 - i * 0.35) + 'px';
+        document.body.appendChild(d);
+        return d;
+    });
+    let positions = trail.map(() => ({x: -100, y: -100}));
+    document.addEventListener('mousemove', e => { positions[0] = {x: e.clientX, y: e.clientY}; });
+    (function animate() {
+        for (let i = trail.length - 1; i > 0; i--) {
+            positions[i].x += (positions[i-1].x - positions[i].x) * 0.35;
+            positions[i].y += (positions[i-1].y - positions[i].y) * 0.35;
+        }
+        trail.forEach((d, i) => { d.style.left = positions[i].x + 'px'; d.style.top = positions[i].y + 'px'; });
+        requestAnimationFrame(animate);
+    })();
+
+    // --- Toast ---
+    let toastTimer;
+    function showToast(icon, msg) {
+        const t = document.getElementById('toast');
+        document.getElementById('toast-icon').textContent = icon;
+        document.getElementById('toast-msg').textContent = msg;
+        t.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+</script>
 
 </body>
 </html>
